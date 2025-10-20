@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.theta.xi.thetaboard.MainActivity">
+    <item
+        android:id="@+id/settingsFragment"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/bulletinBoardsFragment"
+        android:orderInCategory="100"
+        android:title="@string/action_bulletin_boards"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/manageBoardsFragment"
+        android:orderInCategory="100"
+        android:title="@string/action_manage_boards"
+        app:showAsAction="never" />
+</menu>

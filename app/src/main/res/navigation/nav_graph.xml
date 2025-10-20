@@ -3,26 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/settingsFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.theta.xi.thetaboard.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/settingsFragment"
+        android:name="com.theta.xi.thetaboard.SettingsFragment"
+        tools:layout="@layout/settings_fragment"
+        android:label="Settings" />
 
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.theta.xi.thetaboard.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/bulletinBoardsFragment"
+        android:name="com.theta.xi.thetaboard.BulletinBoardsFragment"
+        tools:layout="@layout/manage_boards_fragment"
+        android:label="Bulletin Boards" />
 
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+    <fragment
+        android:id="@+id/manageBoardsFragment"
+        android:name="com.theta.xi.thetaboard.ManageBoardsFragment"
+        tools:layout="@layout/bulletin_boards_fragment"
+        android:label="Manage Boards" />
+
 </navigation>
