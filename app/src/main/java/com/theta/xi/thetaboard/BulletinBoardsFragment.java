@@ -10,16 +10,11 @@ import androidx.fragment.app.Fragment;
 public class BulletinBoardsFragment extends Fragment {
 
     public BulletinBoardsFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // This is where you might retrieve arguments passed to the fragment
-        // if (getArguments() != null) {
-        //     mParam1 = getArguments().getString(ARG_PARAM1);
-        // }
     }
 
     @Override
