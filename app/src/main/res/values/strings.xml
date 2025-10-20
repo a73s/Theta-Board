@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Theta Board</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_bulletin_boards">Bulletin Boards</string>
-    <string name="action_manage_boards">Manage Boards</string>
+    <string name="settings_button_txt">Settings</string>
+    <string name="bulletin_boards_button_txt">Bulletin Boards</string>
+    <string name="manage_boards_button_txt">Manage Boards</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 

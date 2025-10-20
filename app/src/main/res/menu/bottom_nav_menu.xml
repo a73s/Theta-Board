@@ -5,16 +5,16 @@
     <item
         android:id="@+id/settingsFragment"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/settings_button_txt"
         app:showAsAction="never" />
     <item
         android:id="@+id/bulletinBoardsFragment"
         android:orderInCategory="100"
-        android:title="@string/action_bulletin_boards"
+        android:title="@string/bulletin_boards_button_txt"
         app:showAsAction="never" />
     <item
         android:id="@+id/manageBoardsFragment"
         android:orderInCategory="100"
-        android:title="@string/action_manage_boards"
+        android:title="@string/manage_boards_button_txt"
         app:showAsAction="never" />
 </menu>
