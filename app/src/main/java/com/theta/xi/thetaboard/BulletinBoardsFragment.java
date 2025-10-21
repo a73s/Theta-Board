@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.imageview.ShapeableImageView;
+
 public class BulletinBoardsFragment extends Fragment {
 
     public BulletinBoardsFragment() {
@@ -36,13 +38,13 @@ public class BulletinBoardsFragment extends Fragment {
         LayoutInflater inflater = getLayoutInflater();
 
         // Loop through your data
-        String[] items = {"Apple", "Banana", "Cherry"};
+        String[] items = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape"};
         for(String itemText : items){
 
             try {
                 View currentElement = inflater.inflate(R.layout.bullatin_boards_list_item, containerLayout, false);
                 TextView currentText = currentElement.findViewById(R.id.board_list_item_name);
-                ImageView currentImage = currentElement.findViewById(R.id.board_list_item_image);
+                ShapeableImageView currentImage = currentElement.findViewById(R.id.board_list_item_image);
                 currentText.setText(itemText);
 
                 containerLayout.addView(currentElement);

@@ -7,5 +7,10 @@
 
     <style name="Theme.ThetaBoard" parent="Base.Theme.ThetaBoard" />
 
+    <!-- Style for the rounded image corners -->
+    <style name="ShapeAppearance.App.BoardCardImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item> <!-- This is your radius! -->
+    </style>
 
 </resources>
