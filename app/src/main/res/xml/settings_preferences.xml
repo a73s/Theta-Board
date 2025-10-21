@@ -4,20 +4,10 @@
     <PreferenceCategory app:title="Notifications"
         app:iconSpaceReserved="false">
 
-        <SwitchPreferenceCompat
-            app:key="notifications_enabled"
-            app:title="Enable notifications"
-            app:summary="Receive push notifications from the app"
-            app:iconSpaceReserved="false"
-            app:defaultValue="true" />
-
-        <SwitchPreferenceCompat
-            app:key="sound_enabled"
-            app:title="Notification Sound"
-            app:summary="Play a sound for new notifications"
-            app:dependency="notifications_enabled"
-            app:iconSpaceReserved="false"
-            app:defaultValue="true" />
+        <Preference
+            app:key="notifications"
+            app:title="Open System Notification Settings"
+            app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 
