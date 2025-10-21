@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="Notifications">
+    <PreferenceCategory app:title="Notifications"
+        app:iconSpaceReserved="false">
 
         <SwitchPreferenceCompat
             app:key="notifications_enabled"
             app:title="Enable notifications"
             app:summary="Receive push notifications from the app"
+            app:iconSpaceReserved="false"
             app:defaultValue="true" />
 
         <SwitchPreferenceCompat
@@ -14,11 +16,13 @@
             app:title="Notification Sound"
             app:summary="Play a sound for new notifications"
             app:dependency="notifications_enabled"
+            app:iconSpaceReserved="false"
             app:defaultValue="true" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="User Profile">
+    <PreferenceCategory app:title="User Profile"
+        app:iconSpaceReserved="false">
 
         <EditTextPreference
             app:key="username"
@@ -26,6 +30,7 @@
             app:summary="Click to set your display name"
             app:dialogTitle="Enter your username"
             app:defaultValue="Guest"
+            app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
@@ -35,15 +40,18 @@
             app:entries="@array/theme_entries"
             app:entryValues="@array/theme_values"
             app:defaultValue="system"
+            app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="About">
+    <PreferenceCategory app:title="About"
+        app:iconSpaceReserved="false">
 
         <Preference
             app:key="version"
             app:title="App Version"
+            app:iconSpaceReserved="false"
             app:summary="1.0.0" />
 
     </PreferenceCategory>
