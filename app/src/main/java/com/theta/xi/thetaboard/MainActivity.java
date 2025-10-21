@@ -1,6 +1,5 @@
 package com.theta.xi.thetaboard;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;

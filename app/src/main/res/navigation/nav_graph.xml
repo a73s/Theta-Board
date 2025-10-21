@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.theta.xi.thetaboard.SettingsFragment"
-        tools:layout="@layout/settings_fragment"
         android:label="Settings" />
 
     <fragment
