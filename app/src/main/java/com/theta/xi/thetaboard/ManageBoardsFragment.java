@@ -6,10 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
-public class ManageBoardsFragment extends Fragment {
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+public class ManageBoardsFragment extends Fragment implements View.OnClickListener {
+
+    MaterialButton add_board_cancel = null;
+    MaterialButton add_board_submit = null;
+    FloatingActionButton add_board = null;
+    MaterialCardView add_board_prompt = null;
 
     public ManageBoardsFragment() {
     }
@@ -39,6 +50,41 @@ public class ManageBoardsFragment extends Fragment {
             currentText.setText(itemText);
 
             containerLayout.addView(currentElement);
+        }
+
+        add_board = view.findViewById(R.id.add_board_button);
+        add_board_submit = view.findViewById(R.id.add_board_submit);
+        add_board_cancel = view.findViewById(R.id.add_board_cancel);
+        add_board_prompt = view.findViewById(R.id.add_board_prompt);
+
+        add_board.setOnClickListener(this);
+        add_board_submit.setOnClickListener(this);
+        add_board_cancel.setOnClickListener(this);
+        add_board_prompt.setOnClickListener(this);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                if (add_board_prompt.getVisibility() == View.VISIBLE) {
+                    add_board_prompt.setVisibility(View.GONE);
+                } else {
+                    setEnabled(false);
+                    requireActivity().getOnBackPressedDispatcher().onBackPressed();
+                }
+            }
+        };
+        // Add the callback to the dispatcher
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == add_board){
+            add_board_prompt.setVisibility(View.VISIBLE);
+        } else if(v == add_board_cancel){
+            add_board_prompt.setVisibility(View.GONE);
+        } else if(v == add_board_submit){
+            // TODO: add logic for submitting
         }
     }
 }

@@ -40,15 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_margin="4dp"
-                    android:text="Notifications"
-                    app:cornerRadius="20dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_margin="4dp"
-                    android:text="Admin"
+                    android:text="Manage Members"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/orange"
                     app:cornerRadius="20dp" />
@@ -62,7 +54,7 @@
             android:text="Delete"
             android:textColor="@color/white"
             app:backgroundTint="@color/red"
-            app:cornerRadius="10dp" />
+            app:cornerRadius="4dp" />
 
     </LinearLayout>
 
