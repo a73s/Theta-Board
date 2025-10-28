@@ -5,14 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import androidx.core.view.WindowCompat;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         // set up shared preference listener
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -44,14 +41,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
 
         setContentView(R.layout.activity_main);
-
-        // Make room for the titlebar
-        // View mainLayout = findViewById(R.id.main_linear_layout);
-        // ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (view, windowInsets) -> {
-        //     Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-        //     view.setPadding(insets.left, insets.top, insets.right, insets.bottom);
-        //     return WindowInsetsCompat.CONSUMED;
-        // });
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         assert navHostFragment != null;
