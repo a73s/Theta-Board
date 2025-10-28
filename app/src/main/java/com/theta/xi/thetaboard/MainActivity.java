@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -27,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        //WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         // set up shared preference listener
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -49,12 +46,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setContentView(R.layout.activity_main);
 
         // Make room for the titlebar
-        View mainLayout = findViewById(R.id.main_linear_layout);
-        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (view, windowInsets) -> {
-            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            view.setPadding(insets.left, insets.top, insets.right, insets.bottom);
-            return WindowInsetsCompat.CONSUMED;
-        });
+        // View mainLayout = findViewById(R.id.main_linear_layout);
+        // ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (view, windowInsets) -> {
+        //     Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+        //     view.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+        //     return WindowInsetsCompat.CONSUMED;
+        // });
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         assert navHostFragment != null;

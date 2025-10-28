@@ -1,12 +1,12 @@
 package com.theta.xi.thetaboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
@@ -21,6 +21,9 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
     MaterialButton add_board_submit = null;
     FloatingActionButton add_board = null;
     MaterialCardView add_board_prompt = null;
+
+    //TODO: we need a list of these, they should each be associated with an entry
+    MaterialButton manage_members_button = null;
 
     public ManageBoardsFragment() {
     }
@@ -56,11 +59,13 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
         add_board_submit = view.findViewById(R.id.add_board_submit);
         add_board_cancel = view.findViewById(R.id.add_board_cancel);
         add_board_prompt = view.findViewById(R.id.add_board_prompt);
+        manage_members_button = view.findViewById(R.id.manage_members_button);
 
         add_board.setOnClickListener(this);
         add_board_submit.setOnClickListener(this);
         add_board_cancel.setOnClickListener(this);
         add_board_prompt.setOnClickListener(this);
+        manage_members_button.setOnClickListener(this);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -85,6 +90,10 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
             add_board_prompt.setVisibility(View.GONE);
         } else if(v == add_board_submit){
             // TODO: add logic for submitting
+        } else if(v == manage_members_button){
+            assert getActivity() != null;
+            Intent intent = new Intent(getActivity(), ManageMembersActivity.class);
+            startActivity(intent);
         }
     }
 }
