@@ -1,10 +1,10 @@
 package com.theta.xi.thetaboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
-public class BulletinBoardsFragment extends Fragment {
+public class BulletinBoardsFragment extends Fragment implements View.OnClickListener {
 
     public BulletinBoardsFragment() {
     }
@@ -42,8 +42,16 @@ public class BulletinBoardsFragment extends Fragment {
             TextView currentText = currentElement.findViewById(R.id.board_list_item_name);
             ShapeableImageView currentImage = currentElement.findViewById(R.id.board_list_item_image);
             currentText.setText(itemText);
+            currentElement.setOnClickListener(this);
 
             containerLayout.addView(currentElement);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        assert getActivity() != null;
+        Intent intent = new Intent(getActivity(), ViewBoardActivity.class);
+        startActivity(intent);
     }
 }
