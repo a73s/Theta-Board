@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:gravity="start"
         android:text="Body"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:textStyle="normal" />
 
 
@@ -38,7 +38,7 @@
             android:layout_weight="1"
             android:gravity="start"
             android:text="\@author"
-            android:textSize="10sp"
+            android:textSize="14sp"
             android:textStyle="normal" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:text="date"
-            android:textSize="10sp"
+            android:textSize="14sp"
             android:textStyle="normal" />
 
     </LinearLayout>
