@@ -24,6 +24,7 @@
                 android:id="@+id/manage_members_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textIsSelectable="true"
                 android:gravity="start"
                 android:text="Member Name"
                 android:textSize="20sp"
