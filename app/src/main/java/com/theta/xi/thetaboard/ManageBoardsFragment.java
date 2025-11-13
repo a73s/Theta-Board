@@ -25,8 +25,18 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
     FloatingActionButton add_board = null;
     MaterialCardView add_board_prompt = null;
 
+    public static class ManageMemberButtonInfo {
+        MaterialButton button;
+        int boardID;
+
+        ManageMemberButtonInfo(MaterialButton button, int boardID){
+            this.button = button;
+            this.boardID = boardID;
+        }
+    }
+    ArrayList <ManageMemberButtonInfo> manage_members_buttons = new ArrayList<>();
+
     //TODO: we need a list of these, they should each be associated with an entry
-    MaterialButton manage_members_button = null;
 
     public ManageBoardsFragment() {
     }
@@ -67,6 +77,8 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
             MaterialButton manageMembersButton = currentElement.findViewById(R.id.manage_members_button);
             if(board.userIsAdmin == true) {
                 manageMembersButton.setVisibility(View.VISIBLE);
+                manageMembersButton.setOnClickListener(this);
+                manage_members_buttons.add(new ManageMemberButtonInfo(manageMembersButton, board.boardID));
             }else{
                 manageMembersButton.setVisibility(View.INVISIBLE);
             }
@@ -78,13 +90,11 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
         add_board_submit = view.findViewById(R.id.add_board_submit);
         add_board_cancel = view.findViewById(R.id.add_board_cancel);
         add_board_prompt = view.findViewById(R.id.add_board_prompt);
-        manage_members_button = view.findViewById(R.id.manage_members_button);
 
         add_board.setOnClickListener(this);
         add_board_submit.setOnClickListener(this);
         add_board_cancel.setOnClickListener(this);
         add_board_prompt.setOnClickListener(this);
-        manage_members_button.setOnClickListener(this);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -109,10 +119,14 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
             add_board_prompt.setVisibility(View.GONE);
         } else if(v == add_board_submit){
             // TODO: add logic for submitting
-        } else if(v == manage_members_button){
-            assert getActivity() != null;
-            Intent intent = new Intent(getActivity(), ManageMembersActivity.class);
-            startActivity(intent);
+        } else {
+            for(ManageMemberButtonInfo buttonInfo : manage_members_buttons){
+                if(v == buttonInfo.button){
+                    assert getActivity() != null;
+                    Intent intent = new Intent(getActivity(), ManageMembersActivity.class);
+                    startActivity(intent);
+                }
+            }
         }
     }
 }
