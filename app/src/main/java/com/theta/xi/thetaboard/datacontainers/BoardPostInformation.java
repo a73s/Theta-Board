@@ -1,4 +1,4 @@
-package com.theta.xi.thetaboard;
+package com.theta.xi.thetaboard.datacontainers;
 
 public class BoardPostInformation {
 

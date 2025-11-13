@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.imageview.ShapeableImageView;
+import com.theta.xi.thetaboard.datacontainers.BoardInformation;
+
+import java.util.ArrayList;
 
 public class BulletinBoardsFragment extends Fragment implements View.OnClickListener {
 
@@ -34,14 +37,21 @@ public class BulletinBoardsFragment extends Fragment implements View.OnClickList
         LinearLayout containerLayout = view.findViewById(R.id.BulletinBoardListContainer);
         LayoutInflater inflater = getLayoutInflater();
 
-        // Loop through your data
-        String[] items = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape"};
-        for(String itemText : items){
+        // TODO: replace with a request (more likely a call to a requests class)
+        String[] items = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "ahhh"};
+        ArrayList<BoardInformation> boards = new ArrayList<>();
+        int i = 0;
+        for(String item : items){
+            boards.add(new BoardInformation(item, i % 2 != 0, i));
+            i++;
+        }
+
+        for(BoardInformation board : boards){
 
             View currentElement = inflater.inflate(R.layout.bullatin_boards_list_item, containerLayout, false);
             TextView currentText = currentElement.findViewById(R.id.board_list_item_name);
             ShapeableImageView currentImage = currentElement.findViewById(R.id.board_list_item_image);
-            currentText.setText(itemText);
+            currentText.setText(board.name);
             currentElement.setOnClickListener(this);
 
             containerLayout.addView(currentElement);

@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.theta.xi.thetaboard.datacontainers.BoardInformation;
+
+import java.util.ArrayList;
 
 public class ManageBoardsFragment extends Fragment implements View.OnClickListener {
 
@@ -45,12 +48,28 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
         LinearLayout containerLayout = view.findViewById(R.id.ManageBoardsListContainer);
         LayoutInflater inflater = getLayoutInflater();
 
-        String[] items = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape"};
-        for(String itemText : items){
+        // TODO: replace with a request (more likely a call to a requests class)
+        String[] items = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "ahhh"};
+        ArrayList<BoardInformation> boards = new ArrayList<>();
+        int i = 0;
+        for(String item : items){
+            boards.add(new BoardInformation(item, i % 2 != 0, i));
+            i++;
+        }
+
+        for(BoardInformation board : boards){
 
             View currentElement = inflater.inflate(R.layout.manage_boards_list_item, containerLayout, false);
+
             TextView currentText = currentElement.findViewById(R.id.manage_boards_item_name);
-            currentText.setText(itemText);
+            currentText.setText(board.name);
+
+            MaterialButton manageMembersButton = currentElement.findViewById(R.id.manage_members_button);
+            if(board.userIsAdmin == true) {
+                manageMembersButton.setVisibility(View.VISIBLE);
+            }else{
+                manageMembersButton.setVisibility(View.INVISIBLE);
+            }
 
             containerLayout.addView(currentElement);
         }
