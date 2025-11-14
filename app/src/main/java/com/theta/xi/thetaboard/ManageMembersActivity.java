@@ -48,8 +48,10 @@ public class ManageMembersActivity extends AppCompatActivity implements View.OnC
         for(MemberInformation member : memberList){
 
             View currentElement = inflater.inflate(R.layout.manage_members_list_item, containerLayout, false);
-            TextView currentText = currentElement.findViewById(R.id.manage_members_item_name);
-            currentText.setText(member.nickname);
+            TextView memberNameText = currentElement.findViewById(R.id.manage_members_item_name);
+            TextView memberEmailText = currentElement.findViewById(R.id.manage_members_item_email);
+            memberNameText.setText(member.nickname);
+            memberEmailText.setText(member.email);
 
             containerLayout.addView(currentElement);
         }
