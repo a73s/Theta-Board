@@ -8,10 +8,6 @@ import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -26,6 +22,17 @@ public class ManageMembersActivity extends AppCompatActivity implements View.OnC
     MaterialButton add_member_submit = null;
     FloatingActionButton add_member = null;
     MaterialCardView add_member_prompt = null;
+
+    private class KickMemberButtonInfo {
+        MaterialButton button;
+        MemberInformation memberInfo;
+
+        public KickMemberButtonInfo(MaterialButton button, MemberInformation memberInfo){
+            this.button = button;
+            this.memberInfo = memberInfo;
+        }
+    }
+    private ArrayList<KickMemberButtonInfo> kick_buttons = new ArrayList<>();
 
     public ManageMembersActivity() {
     }
@@ -52,6 +59,9 @@ public class ManageMembersActivity extends AppCompatActivity implements View.OnC
             TextView memberEmailText = currentElement.findViewById(R.id.manage_members_item_email);
             memberNameText.setText(member.nickname);
             memberEmailText.setText(member.email);
+            MaterialButton kickButton = currentElement.findViewById(R.id.manage_members_kick_button);
+            kickButton.setOnClickListener(this);
+            kick_buttons.add(new KickMemberButtonInfo(kickButton, member));
 
             containerLayout.addView(currentElement);
         }
@@ -89,6 +99,12 @@ public class ManageMembersActivity extends AppCompatActivity implements View.OnC
             add_member_prompt.setVisibility(View.GONE);
         } else if(v == add_member_submit){
             // TODO: add logic for submitting
+        } else{
+            for(KickMemberButtonInfo button : kick_buttons){
+                if(button.button == v){
+                    // TODO: kick the member
+                }
+            }
         }
     }
 }

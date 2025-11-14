@@ -25,11 +25,11 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
     FloatingActionButton add_board = null;
     MaterialCardView add_board_prompt = null;
 
-    public static class ManageMemberButtonInfo {
+    private class ManageMemberButtonInfo {
         MaterialButton button;
         int boardID;
 
-        ManageMemberButtonInfo(MaterialButton button, int boardID){
+         ManageMemberButtonInfo(MaterialButton button, int boardID){
             this.button = button;
             this.boardID = boardID;
         }
