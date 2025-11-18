@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
@@ -54,8 +56,12 @@ public class ViewBoardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         if(v == create_post_button){
-            Intent intent = new Intent(this, CreatePostActivity.class);
-            startActivity(intent);
+            try {
+                Intent intent = new Intent(this, CreatePostActivity.class);
+                startActivity(intent);
+            } catch (Exception e){
+                Log.d("TAG", "onClick: alksdfjalksd");
+            }
         }
     }
 }
