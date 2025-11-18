@@ -1,4 +1,4 @@
-package com.theta.xi.thetaboard;
+package com.theta.xi.thetaboard.TopLevelFragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.theta.xi.thetaboard.ManageMembersActivity;
+import com.theta.xi.thetaboard.R;
 import com.theta.xi.thetaboard.datacontainers.BoardInformation;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.theta.xi.thetaboard;
+package com.theta.xi.thetaboard.TopLevelFragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +9,8 @@ import android.provider.Settings;
 import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.theta.xi.thetaboard.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.theta.xi.thetaboard.SettingsFragment"
+        android:name="com.theta.xi.thetaboard.TopLevelFragments.SettingsFragment"
         android:label="Settings" />
 
     <fragment
         android:id="@+id/bulletinBoardsFragment"
-        android:name="com.theta.xi.thetaboard.BulletinBoardsFragment"
+        android:name="com.theta.xi.thetaboard.TopLevelFragments.BulletinBoardsFragment"
         tools:layout="@layout/manage_boards_fragment"
         android:label="Bulletin Boards" />
 
     <fragment
         android:id="@+id/manageBoardsFragment"
-        android:name="com.theta.xi.thetaboard.ManageBoardsFragment"
+        android:name="com.theta.xi.thetaboard.TopLevelFragments.ManageBoardsFragment"
         tools:layout="@layout/bulletin_boards_fragment"
         android:label="Manage Boards" />
 

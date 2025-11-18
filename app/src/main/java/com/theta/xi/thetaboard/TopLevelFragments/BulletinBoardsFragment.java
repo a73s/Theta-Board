@@ -1,4 +1,4 @@
-package com.theta.xi.thetaboard;
+package com.theta.xi.thetaboard.TopLevelFragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.imageview.ShapeableImageView;
+import com.theta.xi.thetaboard.R;
+import com.theta.xi.thetaboard.ViewBoardActivity;
 import com.theta.xi.thetaboard.datacontainers.BoardInformation;
 
 import java.util.ArrayList;
