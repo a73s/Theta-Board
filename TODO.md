@@ -1,7 +1,7 @@
 # UI stuff
 - login screen
-- create post button
-- create post screen
+- pass necessary information between intents
+    - passing board ID to ViewBoardActivity and CreatePostActivity and ManageMembersActivity
 
 # Communication with backend
 - Create class that interacts with the backend
