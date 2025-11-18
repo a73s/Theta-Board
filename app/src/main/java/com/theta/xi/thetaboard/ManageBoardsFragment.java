@@ -63,7 +63,7 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
         ArrayList<BoardInformation> boards = new ArrayList<>();
         int i = 0;
         for(String item : items){
-            boards.add(new BoardInformation(item, i % 2 != 0, i));
+            boards.add(new BoardInformation(item, i % 2 != 0, i % 3 != 0, i));
             i++;
         }
 
