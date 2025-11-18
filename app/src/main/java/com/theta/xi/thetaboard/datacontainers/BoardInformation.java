@@ -1,6 +1,8 @@
 package com.theta.xi.thetaboard.datacontainers;
 
-public class BoardInformation {
+import java.io.Serializable;
+
+public class BoardInformation implements Serializable {
     public final int boardID;
     public final String name;
     public final Boolean userIsAdmin;

@@ -24,14 +24,15 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
     MaterialButton add_board_submit = null;
     FloatingActionButton add_board = null;
     MaterialCardView add_board_prompt = null;
+    BoardInformation current_board;
 
     private class ManageMemberButtonInfo {
         MaterialButton button;
-        int boardID;
+        BoardInformation board;
 
-         ManageMemberButtonInfo(MaterialButton button, int boardID){
+         ManageMemberButtonInfo(MaterialButton button, BoardInformation board){
             this.button = button;
-            this.boardID = boardID;
+            this.board = board;
         }
     }
     ArrayList <ManageMemberButtonInfo> manage_members_buttons = new ArrayList<>();
@@ -63,7 +64,7 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
         ArrayList<BoardInformation> boards = new ArrayList<>();
         int i = 0;
         for(String item : items){
-            boards.add(new BoardInformation(item, i % 2 != 0, i % 3 != 0, i));
+            boards.add(new BoardInformation(item, i % 2 == 0, i % 3 == 0, i));
             i++;
         }
 
@@ -78,7 +79,7 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
             if(board.userIsAdmin == true) {
                 manageMembersButton.setVisibility(View.VISIBLE);
                 manageMembersButton.setOnClickListener(this);
-                manage_members_buttons.add(new ManageMemberButtonInfo(manageMembersButton, board.boardID));
+                manage_members_buttons.add(new ManageMemberButtonInfo(manageMembersButton, board));
             }else{
                 manageMembersButton.setVisibility(View.INVISIBLE);
             }
@@ -124,6 +125,7 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
                 if(v == buttonInfo.button){
                     assert getActivity() != null;
                     Intent intent = new Intent(getActivity(), ManageMembersActivity.class);
+                    intent.putExtra("BOARD_INFO", buttonInfo.board);
                     startActivity(intent);
                 }
             }

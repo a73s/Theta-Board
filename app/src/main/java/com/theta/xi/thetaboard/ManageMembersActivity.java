@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.theta.xi.thetaboard.datacontainers.BoardInformation;
 import com.theta.xi.thetaboard.datacontainers.MemberInformation;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class ManageMembersActivity extends AppCompatActivity implements View.OnC
     MaterialButton add_member_submit = null;
     FloatingActionButton add_member = null;
     MaterialCardView add_member_prompt = null;
+    BoardInformation current_board;
 
     private class KickMemberButtonInfo {
         MaterialButton button;
@@ -42,9 +44,13 @@ public class ManageMembersActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manage_members_activity);
 
+        current_board = (BoardInformation) getIntent().getSerializableExtra("BOARD_INFO");
+        assert current_board != null;
+
         LinearLayout containerLayout = findViewById(R.id.ManageMemberListContainer);
         LayoutInflater inflater = getLayoutInflater();
 
+        // TODO: replace with a request (more likely a call to a requests class)
         String[] names = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "Hackberry", "Indian Plum", "Juniper", "Kiwi", "Lemon", "Mango", "Nectarine"};
         ArrayList<MemberInformation> memberList = new ArrayList<>();
 

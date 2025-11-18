@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.theta.xi.thetaboard.datacontainers.BoardInformation;
 import com.theta.xi.thetaboard.datacontainers.BoardPostInformation;
 
 import java.util.ArrayList;
@@ -23,11 +24,15 @@ public class ViewBoardActivity extends AppCompatActivity implements View.OnClick
     }
 
     FloatingActionButton create_post_button;
+    BoardInformation current_board;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_board_activity);
+
+        current_board = (BoardInformation) getIntent().getSerializableExtra("BOARD_INFO");
+        assert current_board != null;
 
         // TODO: replace with a request (more likely a call to a requests class)
         String[] titles = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "Hackberry", "Indian Plum", "Juniper", "Kiwi", "Lemon", "Mango", "Nectarine"};
@@ -39,6 +44,9 @@ public class ViewBoardActivity extends AppCompatActivity implements View.OnClick
         RecyclerView recyclerView = findViewById(R.id.board_post_list_container);
         create_post_button = findViewById(R.id.create_post_button);
         create_post_button.setOnClickListener(this);
+        if (!current_board.userIsPoster){
+            create_post_button.setVisibility(View.GONE);
+        }
 
         BoardPostsRecyclerAdapter adapter = new BoardPostsRecyclerAdapter(posts);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -56,12 +64,9 @@ public class ViewBoardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         if(v == create_post_button){
-            try {
-                Intent intent = new Intent(this, CreatePostActivity.class);
-                startActivity(intent);
-            } catch (Exception e){
-                Log.d("TAG", "onClick: alksdfjalksd");
-            }
+            Intent intent = new Intent(this, CreatePostActivity.class);
+            intent.putExtra("BOARD_INFO", current_board);
+            startActivity(intent);
         }
     }
 }

@@ -17,6 +17,18 @@ import java.util.ArrayList;
 
 public class BulletinBoardsFragment extends Fragment implements View.OnClickListener {
 
+    private class BoardButtonInfo {
+        View clickable;
+        BoardInformation board;
+
+        BoardButtonInfo(View clickable, BoardInformation board){
+            this.clickable = clickable;
+            this.board = board;
+        }
+    }
+
+    private ArrayList<BulletinBoardsFragment.BoardButtonInfo> board_buttons = new ArrayList<>();
+
     public BulletinBoardsFragment() {
     }
 
@@ -42,7 +54,7 @@ public class BulletinBoardsFragment extends Fragment implements View.OnClickList
         ArrayList<BoardInformation> boards = new ArrayList<>();
         int i = 0;
         for(String item : items){
-            boards.add(new BoardInformation(item, i % 2 != 0, i % 3 != 0, i));
+            boards.add(new BoardInformation(item, i % 2 == 0, i % 3 == 0, i));
             i++;
         }
 
@@ -53,6 +65,7 @@ public class BulletinBoardsFragment extends Fragment implements View.OnClickList
             ShapeableImageView currentImage = currentElement.findViewById(R.id.board_list_item_image);
             currentText.setText(board.name);
             currentElement.setOnClickListener(this);
+            board_buttons.add(new BoardButtonInfo(currentElement, board));
 
             containerLayout.addView(currentElement);
         }
@@ -60,8 +73,13 @@ public class BulletinBoardsFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        assert getActivity() != null;
-        Intent intent = new Intent(getActivity(), ViewBoardActivity.class);
-        startActivity(intent);
+        for(BoardButtonInfo boardButton : board_buttons) {
+            if(boardButton.clickable == v) {
+                assert getActivity() != null;
+                Intent intent = new Intent(getActivity(), ViewBoardActivity.class);
+                intent.putExtra("BOARD_INFO", boardButton.board);
+                startActivity(intent);
+            }
+        }
     }
 }
