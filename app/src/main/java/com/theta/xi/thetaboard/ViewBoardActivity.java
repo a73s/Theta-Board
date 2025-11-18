@@ -1,20 +1,26 @@
 package com.theta.xi.thetaboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.view.View;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.theta.xi.thetaboard.datacontainers.BoardPostInformation;
 
 import java.util.ArrayList;
 
-public class ViewBoardActivity extends AppCompatActivity {
+public class ViewBoardActivity extends AppCompatActivity implements View.OnClickListener {
 
     public ViewBoardActivity() {
     }
+
+    FloatingActionButton create_post_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,8 @@ public class ViewBoardActivity extends AppCompatActivity {
         }
 
         RecyclerView recyclerView = findViewById(R.id.board_post_list_container);
+        create_post_button = findViewById(R.id.create_post_button);
+        create_post_button.setOnClickListener(this);
 
         BoardPostsRecyclerAdapter adapter = new BoardPostsRecyclerAdapter(posts);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -41,5 +49,13 @@ public class ViewBoardActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == create_post_button){
+            Intent intent = new Intent(this, CreatePostActivity.class);
+            startActivity(intent);
+        }
     }
 }
