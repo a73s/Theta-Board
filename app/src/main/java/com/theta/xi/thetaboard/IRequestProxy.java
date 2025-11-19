@@ -30,13 +30,29 @@ public interface IRequestProxy {
     // Used to retrieve all members that are in a board. Should only work if they are a member of the board
     public ArrayList<MemberInformation> getAllMembersForBoard(String authToken, int boardID);
 
+    // Used to post on a board.
+    // Should only be allowed if the user has the right to do so.
+    public Boolean postOnBoard(String authToken, int boardID, String title, String body);
+
     // Used to kick a user, should only work if the user is an admin
     // Return true/false for success/failure
-    public Boolean kickUser(String authToken, String email);
+    public Boolean kickUser(String authToken, int boardID, String email);
+
+    // Used to send an invitation to a person over email, which contains a join code that they can enter, that will only work on their account.
+    // The recipient would not necessarily need to have registered an account already.
+    // Only an admin of the board should be able to send an invitation
+    // We can change this if it that is not how we want to do that.
+    // Return true/false for success/failure
+    public Boolean inviteUser(String authToken, int boardID, String recipientEmail);
 
     // Used to leave a board
     // Return true/false for success/failure
     public Boolean leaveBoard(String authToken, int boardID);
+
+    // Used to join a board
+    // The server should make sure that the invitation is associated with that account
+    // Return true/false for success/failure
+    public Boolean joinBoard(String authToken, String joinCode);
 
     // Used to set display name
     // Return true/false for success/failure
