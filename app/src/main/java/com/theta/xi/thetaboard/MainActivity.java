@@ -3,6 +3,7 @@ package com.theta.xi.thetaboard;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -47,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+        // Start login screen
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override

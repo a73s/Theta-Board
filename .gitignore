@@ -15,4 +15,4 @@
 .cxx
 local.properties
 *.bkp
-/app/src/main/java/com/theta/xi/thetaboard/tags
+**/tags
