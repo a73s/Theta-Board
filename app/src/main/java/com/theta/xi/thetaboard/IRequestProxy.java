@@ -15,7 +15,7 @@ public interface IRequestProxy {
     // This is used to submit the password or code for authentication,
     // returns an authToken that can be sent to identify the session in the future, empty if failed
     // May add an email parameter
-    public String completeLogin(String password);
+    public String completeLogin(String email, String password);
 
     // This is used to check if the current session should be logged out or not
     // Return true/false for success/failure
