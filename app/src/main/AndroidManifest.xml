@@ -36,6 +36,11 @@
             android:exported="false"
             android:theme="@style/Theme.ThetaBoard">
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ThetaBoard">
+        </activity>
     </application>
 
 </manifest>
