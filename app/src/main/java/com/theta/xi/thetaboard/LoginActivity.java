@@ -1,6 +1,8 @@
 package com.theta.xi.thetaboard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.activity.OnBackPressedCallback;
+
 import android.os.Bundle;
 import android.view.View;
 
@@ -28,16 +30,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                if (add_board_prompt.getVisibility() == View.VISIBLE) {
-                    add_board_prompt.setVisibility(View.GONE);
-                } else {
-                    setEnabled(false);
-                    requireActivity().getOnBackPressedDispatcher().onBackPressed();
-                }
             }
         };
         // Add the callback to the dispatcher
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
