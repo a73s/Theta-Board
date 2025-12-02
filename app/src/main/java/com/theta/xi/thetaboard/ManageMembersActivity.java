@@ -36,9 +36,6 @@ public class ManageMembersActivity extends AppCompatActivity implements View.OnC
     }
     private ArrayList<KickMemberButtonInfo> kick_buttons = new ArrayList<>();
 
-    public ManageMembersActivity() {
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
