@@ -8,13 +8,12 @@ import java.util.ArrayList;
 
 public interface IRequestProxy {
 
-    // This is used to tell the server to send a password or code to the user's email.
+    // registers an account
     // Return true/false for success/failure
     public Boolean register(String email, String password);
 
-    // This is used to submit the password or code for authentication,
-    // returns an authToken that can be sent to identify the session in the future, empty if failed
-    // May add an email parameter
+    // login to account
+    // returns an auth token or an empty string
     public String login(String email, String password);
 
     // This is used to check if the current session should be logged out or not
