@@ -15,9 +15,14 @@ public interface IRequestProxy {
     public Boolean register(String email, String password);
 
     // login to account
-    // returns an auth token or an empty string
+    // Return true/false for success/failure
     // should set the auth token and keep it in the proxy class
-    public void login(String email, String password);
+    public Boolean login(String email, String password);
+
+    // login out of account
+    // Return true/false for success/failure
+    // should set the auth token to ""
+    public Boolean logout();
 
     // This is used to check if the current session should be logged out or not
     // Return true/false for success/failure
