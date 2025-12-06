@@ -67,6 +67,14 @@ public class HttpRequestProxy implements IRequestProxy {
     private final Gson gson = new Gson();
     private String authToken = "";
 
+    private static IRequestProxy instance = null;
+    public static IRequestProxy getProxy(){
+        if(instance == null){
+            instance = new HttpRequestProxy("192.168.1.100"); // Placeholder ip/domain
+        }
+        return instance;
+    }
+
     public HttpRequestProxy(String baseUrl) {
         this.baseUrl = baseUrl;
     }

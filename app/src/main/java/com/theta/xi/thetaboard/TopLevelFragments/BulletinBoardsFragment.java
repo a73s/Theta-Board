@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.imageview.ShapeableImageView;
+import com.theta.xi.thetaboard.HttpRequestProxy;
 import com.theta.xi.thetaboard.R;
 import com.theta.xi.thetaboard.ViewBoardActivity;
 import com.theta.xi.thetaboard.datacontainers.BoardInformation;
@@ -51,14 +52,15 @@ public class BulletinBoardsFragment extends Fragment implements View.OnClickList
         LinearLayout containerLayout = view.findViewById(R.id.BulletinBoardListContainer);
         LayoutInflater inflater = getLayoutInflater();
 
-        // TODO: replace with a request (more likely a call to a requests class)
-        String[] items = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "ahhh"};
-        ArrayList<BoardInformation> boards = new ArrayList<>();
-        int i = 0;
-        for(String item : items){
-            boards.add(new BoardInformation(item, i % 2 == 0, i % 3 == 0, i));
-            i++;
-        }
+        // String[] items = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "ahhh"};
+        // ArrayList<BoardInformation> boards = new ArrayList<>();
+        // int i = 0;
+        // for(String item : items){
+        //     boards.add(new BoardInformation(item, i % 2 == 0, i % 3 == 0, i));
+        //     i++;
+        // }
+
+        ArrayList<BoardInformation> boards = HttpRequestProxy.getProxy().getAllBoardsForUser();
 
         for(BoardInformation board : boards){
 

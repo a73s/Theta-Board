@@ -47,13 +47,13 @@ public class ManageMembersActivity extends AppCompatActivity implements View.OnC
         LinearLayout containerLayout = findViewById(R.id.ManageMemberListContainer);
         LayoutInflater inflater = getLayoutInflater();
 
-        // TODO: replace with a request (more likely a call to a requests class)
-        String[] names = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "Hackberry", "Indian Plum", "Juniper", "Kiwi", "Lemon", "Mango", "Nectarine"};
-        ArrayList<MemberInformation> memberList = new ArrayList<>();
+        // String[] names = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "Hackberry", "Indian Plum", "Juniper", "Kiwi", "Lemon", "Mango", "Nectarine"};
+        // ArrayList<MemberInformation> memberList = new ArrayList<>();
+        // for(String name : names){
+        //     memberList.add(new MemberInformation(name + "@example.com", name));
+        // }
 
-        for(String name : names){
-            memberList.add(new MemberInformation(name + "@example.com", name));
-        }
+        ArrayList<MemberInformation> memberList = HttpRequestProxy.getProxy().getAllMembersForBoard(current_board.boardID);
 
         for(MemberInformation member : memberList){
 

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.theta.xi.thetaboard.HttpRequestProxy;
 import com.theta.xi.thetaboard.ManageMembersActivity;
 import com.theta.xi.thetaboard.R;
 import com.theta.xi.thetaboard.datacontainers.BoardInformation;
@@ -26,7 +27,6 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
     MaterialButton add_board_submit = null;
     FloatingActionButton add_board = null;
     MaterialCardView add_board_prompt = null;
-    BoardInformation current_board;
 
     private class ManageMemberButtonInfo {
         MaterialButton button;
@@ -61,14 +61,15 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
         LinearLayout containerLayout = view.findViewById(R.id.ManageBoardsListContainer);
         LayoutInflater inflater = getLayoutInflater();
 
-        // TODO: replace with a request (more likely a call to a requests class)
-        String[] items = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "ahhh"};
-        ArrayList<BoardInformation> boards = new ArrayList<>();
-        int i = 0;
-        for(String item : items){
-            boards.add(new BoardInformation(item, i % 2 == 0, i % 3 == 0, i));
-            i++;
-        }
+        // String[] items = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "ahhh"};
+        // ArrayList<BoardInformation> boards = new ArrayList<>();
+        // int i = 0;
+        // for(String item : items){
+        //     boards.add(new BoardInformation(item, i % 2 == 0, i % 3 == 0, i));
+        //     i++;
+        // }
+
+        ArrayList<BoardInformation> boards = HttpRequestProxy.getProxy().getAllBoardsForUser();
 
         for(BoardInformation board : boards){
 

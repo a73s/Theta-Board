@@ -34,12 +34,13 @@ public class ViewBoardActivity extends AppCompatActivity implements View.OnClick
         current_board = (BoardInformation) getIntent().getSerializableExtra("BOARD_INFO");
         assert current_board != null;
 
-        // TODO: replace with a request (more likely a call to a requests class)
-        String[] titles = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "Hackberry", "Indian Plum", "Juniper", "Kiwi", "Lemon", "Mango", "Nectarine"};
-        ArrayList<BoardPostInformation> posts = new ArrayList<>();
-        for(int i = 0; i < titles.length; i++) {
-            posts.add(new BoardPostInformation(titles[i], "Content" + i, "author" +i , "date"+ i));
-        }
+        // String[] titles = {"Apple", "Banana", "Cherry", "Dates", "Elderberry", "Fig", "Grape", "Hackberry", "Indian Plum", "Juniper", "Kiwi", "Lemon", "Mango", "Nectarine"};
+        // ArrayList<BoardPostInformation> posts = new ArrayList<>();
+        // for(int i = 0; i < titles.length; i++) {
+        //     posts.add(new BoardPostInformation(titles[i], "Content" + i, "author" +i , "date"+ i));
+        // }
+
+        ArrayList<BoardPostInformation> posts = HttpRequestProxy.getProxy().getAllPostsForBoard(current_board.boardID);
 
         RecyclerView recyclerView = findViewById(R.id.board_post_list_container);
         create_post_button = findViewById(R.id.create_post_button);
