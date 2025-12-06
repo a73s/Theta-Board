@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,7 +36,12 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         if(v == post_button){
-            HttpRequestProxy.getProxy().postOnBoard(current_board.boardID, post_title.getText().toString(), post_body.getText().toString());
+            Boolean success = HttpRequestProxy.getProxy().postOnBoard(current_board.boardID, post_title.getText().toString(), post_body.getText().toString());
+            if(success) {
+                Toast.makeText(this, "Successfully created post.", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(this, "Failed to create post.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

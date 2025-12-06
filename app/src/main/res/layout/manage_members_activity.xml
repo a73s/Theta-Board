@@ -57,7 +57,6 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/manage_members_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
@@ -66,28 +65,16 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_member_ip_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_member_email_entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_member_code_entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Invite Code"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_member_password_entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

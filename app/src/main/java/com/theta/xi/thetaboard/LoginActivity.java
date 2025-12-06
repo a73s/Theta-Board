@@ -5,6 +5,7 @@ import androidx.activity.OnBackPressedCallback;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -45,9 +46,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Boolean success = HttpRequestProxy.getProxy().login(email_entry.getText().toString(), password_entry.getText().toString());
             if(success) {
                 finish();
+            } else{
+                Toast.makeText(this, "Failed to log in.", Toast.LENGTH_SHORT).show();
             }
         } else if (v == register_account_button) {
             Boolean success = HttpRequestProxy.getProxy().register(email_entry.getText().toString(), password_entry.getText().toString());
+            if(success) {
+                Toast.makeText(this, "Successfully registered.", Toast.LENGTH_SHORT).show();
+            } else{
+                Toast.makeText(this, "Failed to register.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

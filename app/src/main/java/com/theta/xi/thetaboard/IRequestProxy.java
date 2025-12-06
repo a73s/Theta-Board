@@ -25,7 +25,7 @@ public interface IRequestProxy {
     public Boolean logout();
 
     // This is used to check if the current session should be logged out or not
-    // Return true/false for success/failure
+    // Return true/false for valid/invalid
     public Boolean sessionValid();
 
     // Used to retrieve all boards that the user is in.
@@ -59,7 +59,7 @@ public interface IRequestProxy {
     // Used to join a board
     // The server should make sure that the invitation is associated with that account
     // Return true/false for success/failure
-    public Boolean joinBoard(String joinCode);
+    public Boolean joinBoar(String joinCode);
 
     // Used to set display name
     // Return true/false for success/failure

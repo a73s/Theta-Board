@@ -15,8 +15,8 @@
         app:iconSpaceReserved="false">
 
         <EditTextPreference
-            app:key="username"
-            app:title="Username"
+            app:key="display-name"
+            app:title="Display Name"
             app:summary="Click to set your display name"
             app:dialogTitle="Enter your username"
             app:defaultValue="Guest"

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.theta.xi.thetaboard.HttpRequestProxy;
 import com.theta.xi.thetaboard.ManageMembersActivity;
 import com.theta.xi.thetaboard.R;
@@ -27,17 +29,20 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
     MaterialButton add_board_submit = null;
     FloatingActionButton add_board = null;
     MaterialCardView add_board_prompt = null;
+    TextInputEditText add_board_code_entry = null;
 
-    private class ManageMemberButtonInfo {
+    private class ButtonInfo {
         MaterialButton button;
         BoardInformation board;
 
-         ManageMemberButtonInfo(MaterialButton button, BoardInformation board){
+         ButtonInfo(MaterialButton button, BoardInformation board){
             this.button = button;
             this.board = board;
         }
     }
-    ArrayList <ManageMemberButtonInfo> manage_members_buttons = new ArrayList<>();
+
+    ArrayList <ButtonInfo> manage_members_buttons = new ArrayList<>();
+    ArrayList <ButtonInfo> delete_board_buttons = new ArrayList<>();
 
     //TODO: we need a list of these, they should each be associated with an entry
 
@@ -79,10 +84,13 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
             currentText.setText(board.name);
 
             MaterialButton manageMembersButton = currentElement.findViewById(R.id.manage_members_button);
+            MaterialButton deleteBoardButton = currentElement.findViewById(R.id.delete_board_button);
             if(board.userIsAdmin == true) {
                 manageMembersButton.setVisibility(View.VISIBLE);
                 manageMembersButton.setOnClickListener(this);
-                manage_members_buttons.add(new ManageMemberButtonInfo(manageMembersButton, board));
+                deleteBoardButton.setOnClickListener(this);
+                manage_members_buttons.add(new ButtonInfo(manageMembersButton, board));
+                delete_board_buttons.add(new ButtonInfo(manageMembersButton, board));
             }else{
                 manageMembersButton.setVisibility(View.INVISIBLE);
             }
@@ -94,6 +102,7 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
         add_board_submit = view.findViewById(R.id.add_board_submit);
         add_board_cancel = view.findViewById(R.id.add_board_cancel);
         add_board_prompt = view.findViewById(R.id.add_board_prompt);
+        add_board_code_entry = view.findViewById(R.id.add_board_code_entry);
 
         add_board.setOnClickListener(this);
         add_board_submit.setOnClickListener(this);
@@ -122,14 +131,32 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
         } else if(v == add_board_cancel){
             add_board_prompt.setVisibility(View.GONE);
         } else if(v == add_board_submit){
-            // TODO: add logic for submitting
+            assert getActivity() != null;
+            Boolean success = HttpRequestProxy.getProxy().joinBoard(add_board_code_entry.getText().toString());
+            if(success) {
+                Toast.makeText(getActivity(), "Successfully added board.", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getActivity(), "Failed to add board.", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            for(ManageMemberButtonInfo buttonInfo : manage_members_buttons){
+            for(ButtonInfo buttonInfo : manage_members_buttons){
                 if(v == buttonInfo.button){
                     assert getActivity() != null;
                     Intent intent = new Intent(getActivity(), ManageMembersActivity.class);
                     intent.putExtra("BOARD_INFO", buttonInfo.board);
                     startActivity(intent);
+                }
+            }
+
+            for(ButtonInfo buttonInfo : delete_board_buttons){
+                if(v == buttonInfo.button){
+                    assert getActivity() != null;
+                    Boolean success = HttpRequestProxy.getProxy().leaveBoard(buttonInfo.board.boardID);
+                    if(success) {
+                        Toast.makeText(getActivity(), "Successfully left board.", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getActivity(), "Failed leave board.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.theta.xi.thetaboard.datacontainers.BoardInformation;
 import com.theta.xi.thetaboard.datacontainers.MemberInformation;
 
@@ -23,6 +25,7 @@ public class ManageMembersActivity extends AppCompatActivity implements View.OnC
     MaterialButton add_member_submit = null;
     FloatingActionButton add_member = null;
     MaterialCardView add_member_prompt = null;
+    TextInputEditText add_member_email = null;
     BoardInformation current_board;
 
     private class KickMemberButtonInfo {
@@ -73,11 +76,13 @@ public class ManageMembersActivity extends AppCompatActivity implements View.OnC
         add_member_submit = findViewById(R.id.add_member_submit);
         add_member_cancel = findViewById(R.id.add_member_cancel);
         add_member_prompt = findViewById(R.id.add_member_prompt);
+        add_member_email = findViewById(R.id.add_member_email_entry);
 
         add_member.setOnClickListener(this);
         add_member_submit.setOnClickListener(this);
         add_member_cancel.setOnClickListener(this);
         add_member_prompt.setOnClickListener(this);
+        add_member_email.setOnClickListener(this);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -101,11 +106,21 @@ public class ManageMembersActivity extends AppCompatActivity implements View.OnC
         } else if(v == add_member_cancel){
             add_member_prompt.setVisibility(View.GONE);
         } else if(v == add_member_submit){
-            // TODO: add logic for submitting
+            Boolean success = HttpRequestProxy.getProxy().inviteUser(current_board.boardID, add_member_email.getText().toString());
+            if(success) {
+                add_member_prompt.setVisibility(View.GONE);
+            }else {
+                Toast.makeText(this, "Failed to invited user.", Toast.LENGTH_SHORT).show();
+            }
         } else{
             for(KickMemberButtonInfo button : kick_buttons){
                 if(button.button == v){
-                    // TODO: kick the member
+                    Boolean success = HttpRequestProxy.getProxy().kickUser(current_board.boardID, button.memberInfo.email);
+                    if(success) {
+                        Toast.makeText(this, "Successfully kicked user.", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(this, "Failed to kick user.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }

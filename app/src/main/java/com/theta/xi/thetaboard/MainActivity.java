@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
@@ -67,6 +68,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
             if (themeString.equals("system")) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            }
+        } else if (Objects.equals(key, "display-name")) {
+            String newName = sharedPreferences.getString("display-name", "Guest");
+            Boolean success = HttpRequestProxy.getProxy().setDisplayName(newName);
+            if(success) {
+                Toast.makeText(this, "Successfully set display name.", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(this, "Failed to set display name. Defaults to \"Guest\".", Toast.LENGTH_SHORT).show();
             }
         }
     }
