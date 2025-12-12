@@ -1,12 +1,24 @@
 package com.theta.xi.thetaboard.datacontainers;
 
+import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class BoardInformation implements Serializable {
-    public final int boardID;
-    public final String name;
-    public final Boolean userIsAdmin;
-    public final Boolean userIsPoster;
+    //adjust serialized name based off api responses
+    @SerializedName("boardId")
+    public int boardID;
+    @SerializedName("boardName")
+    public String name;
+    @SerializedName("boardDescription")
+    public String description;
+    @SerializedName("creatorId")
+    public int creatorId;
+
+    public Boolean userIsAdmin;
+    public Boolean userIsPoster;
+
+    @SerializedName("accessLevel")
+    private String accessLevel;
 
     public BoardInformation(String name, Boolean userIsAdmin, Boolean userIsPoster, int boardID){
         this.name = name;
@@ -20,5 +32,25 @@ public class BoardInformation implements Serializable {
         userIsAdmin = false;
         userIsPoster = false;
         this.boardID = 0;
+    }
+    //this will be useful for ui logic
+    public void setPermissions() {
+        if (accessLevel == null) {
+            userIsAdmin = false;
+            userIsPoster = false;
+            return;
+        }
+        if(accessLevel.equalsIgnoreCase("moderate")) {
+            userIsAdmin = true;
+            userIsPoster = true;
+        }
+        if(accessLevel.equalsIgnoreCase("post")) {
+            userIsAdmin = false;
+            userIsPoster = true;
+        }
+        if(accessLevel.equalsIgnoreCase("read")) {
+            userIsAdmin = false;
+            userIsPoster = false;
+        }
     }
 }

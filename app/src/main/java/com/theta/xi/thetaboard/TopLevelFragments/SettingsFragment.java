@@ -11,7 +11,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.theta.xi.thetaboard.R;
-
+//username here is odd considering it is stored on the server and you need server connection to use the app
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     public SettingsFragment() {

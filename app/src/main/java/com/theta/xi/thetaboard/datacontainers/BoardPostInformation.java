@@ -1,11 +1,23 @@
 package com.theta.xi.thetaboard.datacontainers;
 
-public class BoardPostInformation {
+import com.google.gson.annotations.SerializedName;
 
-    public final String title;
-    public final String body;
-    public final String author;
-    public final String date;
+public class BoardPostInformation {
+    //unused fields are kept for future dev
+    @SerializedName("postId")
+    public int postId;
+    @SerializedName("boardId")
+    public int boardId;
+    @SerializedName("posterId")
+    public int posterId;
+    @SerializedName("posterUsername")
+    public String author;
+    @SerializedName("title")
+    public String title;
+    @SerializedName("body")
+    public String body;
+    @SerializedName("datePosted")
+    public String date;
 
     public BoardPostInformation(String title, String body, String author, String date){
         this.title = title;

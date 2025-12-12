@@ -2,6 +2,7 @@ package com.theta.xi.thetaboard;
 
 import com.theta.xi.thetaboard.datacontainers.BoardInformation;
 import com.theta.xi.thetaboard.datacontainers.BoardPostInformation;
+import com.theta.xi.thetaboard.datacontainers.InviteResponse;
 import com.theta.xi.thetaboard.datacontainers.MemberInformation;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public interface IRequestProxy {
     // Only an admin of the board should be able to send an invitation
     // We can change this if it that is not how we want to do that.
     // Return true/false for success/failure
-    public Boolean inviteUser(int boardID, String recipientEmail);
+    InviteResponse inviteUser(int boardID);
 
     // Used to leave a board
     // Return true/false for success/failure
@@ -59,9 +60,10 @@ public interface IRequestProxy {
     // Used to join a board
     // The server should make sure that the invitation is associated with that account
     // Return true/false for success/failure
-    public Boolean joinBoar(String joinCode);
+    public Boolean joinBoard(String joinCode);
 
     // Used to set display name
     // Return true/false for success/failure
     public Boolean setDisplayName(String displayName);
+
 }
