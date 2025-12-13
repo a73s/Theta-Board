@@ -369,6 +369,11 @@ public class HttpRequestProxy implements IRequestProxy {
             return false;
         }
     }
+
+    @Override
+    public Boolean createBoard(String name, String description) {
+        return true;
+    }
     //Used to get username
 
 }

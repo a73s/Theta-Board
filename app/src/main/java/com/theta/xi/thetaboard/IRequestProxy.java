@@ -66,4 +66,8 @@ public interface IRequestProxy {
     // Return true/false for success/failure
     public Boolean setDisplayName(String displayName);
 
+    // Used to create a new board
+    // Return true/false for success/failure
+    public Boolean createBoard(String name, String description);
+
 }

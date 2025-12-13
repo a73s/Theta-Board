@@ -34,6 +34,13 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
     FloatingActionButton add_board = null;
     MaterialCardView add_board_prompt = null;
     TextInputEditText add_board_code_entry = null;
+
+    FloatingActionButton create_board_button = null;
+    MaterialCardView create_board_prompt = null;
+    MaterialButton create_board_cancel = null;
+    MaterialButton create_board_submit = null;
+    TextInputEditText create_board_name_entry = null;
+    TextInputEditText create_board_description_entry = null;
     private LinearLayout containerLayout;
     private LayoutInflater inflater;
     ArrayList<ButtonInfo> manage_members_buttons = new ArrayList<>();
@@ -78,17 +85,29 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
         add_board_prompt = view.findViewById(R.id.add_board_prompt);
         add_board_code_entry = view.findViewById(R.id.add_board_code_entry);
 
+        create_board_button = view.findViewById(R.id.create_board_button);
+        create_board_prompt = view.findViewById(R.id.create_board_prompt);
+        create_board_cancel = view.findViewById(R.id.create_board_cancel);
+        create_board_submit = view.findViewById(R.id.create_board_submit);
+        create_board_name_entry = view.findViewById(R.id.create_board_name_entry);
+        create_board_description_entry = view.findViewById(R.id.create_board_description_entry);
+
         add_board.setOnClickListener(this);
         add_board_submit.setOnClickListener(this);
         add_board_cancel.setOnClickListener(this);
-        add_board_prompt.setOnClickListener(this);
+
+        create_board_button.setOnClickListener(this);
+        create_board_submit.setOnClickListener(this);
+        create_board_cancel.setOnClickListener(this);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
                 if (add_board_prompt.getVisibility() == View.VISIBLE) {
                     add_board_prompt.setVisibility(View.GONE);
-                } else {
+                } else if (create_board_prompt.getVisibility() == View.VISIBLE) {
+                    create_board_prompt.setVisibility(View.GONE);
+                }else {
                     setEnabled(false);
                     requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 }
@@ -140,8 +159,14 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         if(v == add_board){
             add_board_prompt.setVisibility(View.VISIBLE);
+        } else if (v == create_board_button) {
+            create_board_prompt.setVisibility(View.VISIBLE);
         } else if(v == add_board_cancel){
             add_board_prompt.setVisibility(View.GONE);
+        } else if (v == create_board_cancel) {
+            create_board_prompt.setVisibility(View.GONE);
+            create_board_name_entry.setText("");
+            create_board_description_entry.setText("");
         } else if(v == add_board_submit){
             String code = add_board_code_entry.getText().toString().trim();
             thread.execute(() -> {
@@ -158,6 +183,16 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
                     }
                 });
             });
+        } else if (v == create_board_submit) {
+            String name = create_board_name_entry.getText().toString().trim();
+            String description = create_board_description_entry.getText().toString().trim();
+            // For now, just show a toast message, as per instruction not to implement network request.
+            assert getActivity() != null;
+            Toast.makeText(getActivity(), "Create Board: " + name + " - " + description, Toast.LENGTH_LONG).show();
+            create_board_prompt.setVisibility(View.GONE);
+            create_board_name_entry.setText("");
+            create_board_description_entry.setText("");
+            // In a real scenario, you would call HttpRequestProxy.getProxy().createBoard(name, description);
         } else {
             for(ButtonInfo buttonInfo : manage_members_buttons){
                 if(v == buttonInfo.button){
