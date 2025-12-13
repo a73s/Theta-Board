@@ -1,7 +1,9 @@
 package com.theta.xi.thetaboard;
 
+import com.google.gson.annotations.SerializedName;
 import com.theta.xi.thetaboard.datacontainers.BoardInformation;
 import com.theta.xi.thetaboard.datacontainers.BoardPostInformation;
+import com.theta.xi.thetaboard.datacontainers.InviteResponse;
 import com.theta.xi.thetaboard.datacontainers.MemberInformation;
 import com.theta.xi.thetaboard.datacontainers.LoginResponse;
 import com.google.gson.Gson;
@@ -10,15 +12,22 @@ import okhttp3.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import android.util.Log;
 public class HttpRequestProxy implements IRequestProxy {
     // Payload for login/register
     static class AuthPayload {
         String email;
         String password;
+        String username;
 
-        AuthPayload(String email, String password) {
+        AuthPayload(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
+
+        AuthPayload(String email, String username, String password) {
             this.email = email;
+            this.username = username;
             this.password = password;
         }
     }
@@ -35,16 +44,18 @@ public class HttpRequestProxy implements IRequestProxy {
     }
 
     // Payload for kicking/inviting to board
-    static class EmailPayload {
+    static class KickPayload {
+        @SerializedName("email")
         String email;
 
-        EmailPayload(String email) {
+        KickPayload(String email) {
             this.email = email;
         }
     }
 
     // Payload for joining board
     static class JoinPayload {
+        @SerializedName("joinCode")
         String code;
 
         JoinPayload(String code) {
@@ -61,6 +72,20 @@ public class HttpRequestProxy implements IRequestProxy {
         }
     }
 
+    //Helpers
+    private String getEmailPrefix(String email) {
+        if (email == null) {
+            return "";
+            //server will automatically reject this
+        }
+        int subStr = email.indexOf('@');
+        if (subStr == -1) {
+            return "";
+            //server will automatically reject this
+        }
+        return email.substring(0, subStr);
+    }
+
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     private final String baseUrl;
     private final OkHttpClient client = new OkHttpClient();
@@ -68,9 +93,10 @@ public class HttpRequestProxy implements IRequestProxy {
     private String authToken = "";
 
     private static IRequestProxy instance = null;
-    public static IRequestProxy getProxy(){
-        if(instance == null){
-            instance = new HttpRequestProxy("192.168.1.100"); // Placeholder ip/domain
+
+    public static IRequestProxy getProxy() {
+        if (instance == null) {
+            instance = new HttpRequestProxy("http://10.0.2.2:8080/api"); // Placeholder ip/domain
         }
         return instance;
     }
@@ -80,6 +106,7 @@ public class HttpRequestProxy implements IRequestProxy {
     }
 
     // Build request for authorization header
+    //this is done
     private Request.Builder authorizedRequest(String url) {
         Request.Builder builder = new Request.Builder().url(url);
         if (!authToken.isEmpty()) {
@@ -99,8 +126,10 @@ public class HttpRequestProxy implements IRequestProxy {
 
         try (Response response = client.newCall(request).execute()) {
             if (response.body() != null) {
+                Log.d("postJson", baseUrl + path);
                 return response.body().string();
             } else {
+                Log.d("failed post request", "onCreate method called.");
                 return null;
             }
         }
@@ -122,6 +151,7 @@ public class HttpRequestProxy implements IRequestProxy {
     }
 
     // Send DELETE requests
+    //not needed
     private String delete(String path) throws IOException {
         Request request = authorizedRequest(baseUrl + path)
                 .delete()
@@ -138,12 +168,14 @@ public class HttpRequestProxy implements IRequestProxy {
 
     // registers an account
     // Return true/false for success/failure
+    //this is done
     @Override
     public Boolean register(String email, String password) {
         try {
-            AuthPayload payload = new AuthPayload(email, password);
+            AuthPayload payload = new AuthPayload(email, getEmailPrefix(email), password);
             String resp = postJson("/auth/register", payload);
-            return resp != null && resp.contains("success");
+            Log.d("HttpRequestProxy", "Login response: " + resp);
+            return resp != null && resp.contains("201");
         } catch (Exception e) {
             return false;
         }
@@ -152,10 +184,11 @@ public class HttpRequestProxy implements IRequestProxy {
     // login to account
     // Return true/false for success/failure
     // should set the auth token and keep it in the proxy class
+    //this is done
     @Override
-    public Boolean login(String email, String password) {
+    public Boolean login(String username, String password) {
         try {
-            AuthPayload payload = new AuthPayload(email, password);
+            AuthPayload payload = new AuthPayload(username, password);
             String resp = postJson("/auth/login", payload);
 
             if (resp == null) {
@@ -168,6 +201,7 @@ public class HttpRequestProxy implements IRequestProxy {
             }
 
             this.authToken = json.token;
+            Log.d("Login Cookie", this.authToken);
             return true;
         } catch (Exception e) {
             return false;
@@ -191,60 +225,74 @@ public class HttpRequestProxy implements IRequestProxy {
 
     // This is used to check if the current session should be logged out or not
     // Return true/false for success/failure
+    //this should be done needs to be implemented case in which after theme is switched the user is "logged out"
     @Override
     public Boolean sessionValid() {
         try {
             String resp = get("/auth/validate");
-            return resp != null && resp.contains("valid");
+            return resp != null && resp.contains("true");
         } catch (Exception e) {
             return false;
         }
     }
 
     // Used to retrieve all boards that the user is in.
+    //this is done
     @Override
     public ArrayList<BoardInformation> getAllBoardsForUser() {
         try {
-            String resp = get("/boards/mine");
+            String resp = get("/board/all");
             BoardInformation[] arr = gson.fromJson(resp, BoardInformation[].class);
+            for (BoardInformation board : arr) {
+                board.setPermissions();
+            }
+            Log.d("getAllBoardsForUser", "Got boards");
             return new ArrayList<>(Arrays.asList(arr));
         } catch (Exception e) {
+            Log.d("getAllBoardsForUser", "Failed to get boards: " + e.getMessage());
             return new ArrayList<>();
         }
     }
 
     // Used to retrieve all boards that the user is in. Should only return something if the user is authorized to view the board
+    //this works
     @Override
     public ArrayList<BoardPostInformation> getAllPostsForBoard(int boardID) {
         try {
-            String resp = get("/boards/" + boardID + "/posts");
+            String resp = get("/board/" + boardID + "/posts");
             BoardPostInformation[] arr = gson.fromJson(resp, BoardPostInformation[].class);
+            Log.d("getAllPostsForBoard", "Got posts for board");
             return new ArrayList<>(Arrays.asList(arr));
         } catch (Exception e) {
+            Log.d("getAllPostsForBoard", "Failed to get post for board");
             return new ArrayList<>();
         }
     }
 
     // Used to retrieve all members that are in a board. Should only work if they are a member of the board
+    // this is done
     @Override
     public ArrayList<MemberInformation> getAllMembersForBoard(int boardID) {
         try {
-            String resp = get("/boards/" + boardID + "/members");
+            String resp = get("/board/" + boardID + "/members");
             MemberInformation[] arr = gson.fromJson(resp, MemberInformation[].class);
+            Log.d("getAllMembersForBoard", "Got members of board");
             return new ArrayList<>(Arrays.asList(arr));
         } catch (Exception e) {
+            Log.d("getAllMembersForBoard", "Failed to get members of board");
             return new ArrayList<>();
         }
     }
 
     // Used to post on a board.
     // Should only be allowed if the user has the right to do so.
+    //this is done
     @Override
     public Boolean postOnBoard(int boardID, String title, String body) {
         try {
             PostPayload payload = new PostPayload(title, body);
-            String resp = postJson("/boards/" + boardID + "/post", payload);
-            return resp != null && resp.contains("success");
+            String resp = postJson("/board/" + boardID + "/post", payload);
+            return resp != null && resp.contains("true");
         } catch (Exception e) {
             return false;
         }
@@ -255,9 +303,9 @@ public class HttpRequestProxy implements IRequestProxy {
     @Override
     public Boolean kickUser(int boardID, String email) {
         try {
-            EmailPayload payload = new EmailPayload(email);
-            String resp = postJson("/boards/" + boardID + "/kick", payload);
-            return resp != null && resp.contains("success");
+            KickPayload payload = new KickPayload(email);
+            String resp = postJson("/board/" + boardID + "/kick", payload);
+            return resp != null && resp.contains("true");
         } catch (Exception e) {
             return false;
         }
@@ -269,13 +317,17 @@ public class HttpRequestProxy implements IRequestProxy {
     // We can change this if it that is not how we want to do that.
     // Return true/false for success/failure
     @Override
-    public Boolean inviteUser(int boardID, String recipientEmail) {
+    public InviteResponse inviteUser(int boardID) {
         try {
-            EmailPayload payload = new EmailPayload(recipientEmail);
-            String resp = postJson("/boards/" + boardID + "/invite", payload);
-            return resp != null && resp.contains("success");
+            String resp = postJson("/board/" + boardID + "/invite", new Object());
+            if (resp == null) {
+                return new InviteResponse(false, null, "Network error");
+            }
+            InviteResponse response = gson.fromJson(resp, InviteResponse.class);
+            return response != null ? response : new InviteResponse(false, null, "Invalid response");
         } catch (Exception e) {
-            return false;
+            Log.e("HttpRequestProxy", "Failed to invite user", e);
+            return new InviteResponse(false, null, "Error: " + e.getMessage());
         }
     }
 
@@ -298,8 +350,8 @@ public class HttpRequestProxy implements IRequestProxy {
     public Boolean joinBoard(String joinCode) {
         try {
             JoinPayload payload = new JoinPayload(joinCode);
-            String resp = postJson("/boards/join", payload);
-            return resp != null && resp.contains("success");
+            String resp = postJson("/board/join", payload);
+            return resp != null && resp.contains("true");
         } catch (Exception e) {
             return false;
         }
@@ -317,5 +369,7 @@ public class HttpRequestProxy implements IRequestProxy {
             return false;
         }
     }
+    //Used to get username
+
 }
 
