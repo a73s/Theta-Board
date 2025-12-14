@@ -14,4 +14,17 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
+
+    @Test
+    public void mockProxyInjection_isCorrect() {
+        // Set the mock proxy
+        HttpRequestProxy.setInstance(new MockRequestProxy());
+
+        // Get the proxy
+        IRequestProxy proxy = HttpRequestProxy.getProxy();
+
+        // Verify it is the mock implementation
+        assertTrue(proxy instanceof MockRequestProxy);
+        assertTrue(proxy.login("any", "any"));
+    }
 }
