@@ -157,28 +157,28 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if(v == add_board){
+        if (v == add_board) {
             add_board_prompt.setVisibility(View.VISIBLE);
         } else if (v == create_board_button) {
             create_board_prompt.setVisibility(View.VISIBLE);
-        } else if(v == add_board_cancel){
+        } else if (v == add_board_cancel) {
             add_board_prompt.setVisibility(View.GONE);
         } else if (v == create_board_cancel) {
             create_board_prompt.setVisibility(View.GONE);
             create_board_name_entry.setText("");
             create_board_description_entry.setText("");
-        } else if(v == add_board_submit){
+        } else if (v == add_board_submit) {
             String code = add_board_code_entry.getText().toString().trim();
             thread.execute(() -> {
                 Boolean success = HttpRequestProxy.getProxy().joinBoard(code);
                 callback.post(() -> {
                     assert getActivity() != null;
-                    if(success) {
+                    if (success) {
                         Toast.makeText(getActivity(), "Successfully added board.", Toast.LENGTH_SHORT).show();
                         add_board_prompt.setVisibility(View.GONE);
                         add_board_code_entry.setText("");
                         loadBoards();
-                    }else {
+                    } else {
                         Toast.makeText(getActivity(), "Failed to add board.", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -186,25 +186,36 @@ public class ManageBoardsFragment extends Fragment implements View.OnClickListen
         } else if (v == create_board_submit) {
             String name = create_board_name_entry.getText().toString().trim();
             String description = create_board_description_entry.getText().toString().trim();
-            // For now, just show a toast message, as per instruction not to implement network request.
-            assert getActivity() != null;
-            Toast.makeText(getActivity(), "Create Board: " + name + " - " + description, Toast.LENGTH_LONG).show();
-            create_board_prompt.setVisibility(View.GONE);
-            create_board_name_entry.setText("");
-            create_board_description_entry.setText("");
-            // In a real scenario, you would call HttpRequestProxy.getProxy().createBoard(name, description);
+            if (name.isEmpty()) {
+                assert getActivity() != null;
+                Toast.makeText(getActivity(), "Board name cannot be empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+            thread.execute(() -> {
+                Boolean success = HttpRequestProxy.getProxy().createBoard(name, description);
+                callback.post(() -> {
+                    assert getActivity() != null;
+                    if (success) {
+                        Toast.makeText(getActivity(), "Board created.", Toast.LENGTH_SHORT).show();
+                        create_board_prompt.setVisibility(View.GONE);
+                        create_board_name_entry.setText("");
+                        create_board_description_entry.setText("");
+                        loadBoards();
+                    } else {
+                        Toast.makeText(getActivity(), "Failed to create board.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
         } else {
-            for(ButtonInfo buttonInfo : manage_members_buttons){
-                if(v == buttonInfo.button){
+            for (ButtonInfo buttonInfo : manage_members_buttons) {
+                if (v == buttonInfo.button) {
                     assert getActivity() != null;
                     Intent intent = new Intent(getActivity(), ManageMembersActivity.class);
                     intent.putExtra("boardData", buttonInfo.board);
                     startActivity(intent);
                 }
-            }
-            //this needs to be fixed
-            for(ButtonInfo buttonInfo : delete_board_buttons){
-
             }
         }
     }

@@ -37,7 +37,7 @@ public class ViewBoardActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_board_activity);
 
-        current_board = (BoardInformation) getIntent().getSerializableExtra("BOARD_INFO");
+        current_board = (BoardInformation) getIntent().getSerializableExtra("boardData");
         assert current_board != null;
 
         RecyclerView recyclerView = findViewById(R.id.board_post_list_container);

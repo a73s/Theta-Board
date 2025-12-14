@@ -16,8 +16,11 @@ import android.util.Log;
 public class HttpRequestProxy implements IRequestProxy {
     // Payload for login/register
     static class AuthPayload {
+        @SerializedName("email")
         String email;
+        @SerializedName("password")
         String password;
+        @SerializedName("username")
         String username;
 
         AuthPayload(String username, String password) {
@@ -34,7 +37,9 @@ public class HttpRequestProxy implements IRequestProxy {
 
     // Payload for posting to board
     static class PostPayload {
+        @SerializedName("title")
         String title;
+        @SerializedName("body")
         String body;
 
         PostPayload(String title, String body) {
@@ -65,6 +70,8 @@ public class HttpRequestProxy implements IRequestProxy {
 
     // Payload for updating display name
     static class DisplayNamePayload {
+
+        @SerializedName("displayName")
         String displayName;
 
         DisplayNamePayload(String displayName) {
@@ -72,6 +79,16 @@ public class HttpRequestProxy implements IRequestProxy {
         }
     }
 
+    static class createBoardPayload{
+        @SerializedName("boardName")
+        String boardName;
+        @SerializedName("boardDescription")
+        String boardDesc;
+        createBoardPayload(String boardName, String boardDesc) {
+            this.boardName=boardName;
+            this.boardDesc=boardDesc;
+        }
+    }
     //Helpers
     private String getEmailPrefix(String email) {
         if (email == null) {
@@ -372,7 +389,13 @@ public class HttpRequestProxy implements IRequestProxy {
 
     @Override
     public Boolean createBoard(String name, String description) {
-        return true;
+        try {
+            createBoardPayload payload = new createBoardPayload(name,description);
+            String resp = postJson("/board/create",payload);
+            return resp != null && resp.contains("boardId");
+        }catch(Exception e) {
+            return false;
+        }
     }
     //Used to get username
 
