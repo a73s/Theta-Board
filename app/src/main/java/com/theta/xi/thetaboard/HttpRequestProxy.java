@@ -23,8 +23,8 @@ public class HttpRequestProxy implements IRequestProxy {
         @SerializedName("username")
         String username;
 
-        AuthPayload(String username, String password) {
-            this.username = username;
+        AuthPayload(String email, String password) {
+            this.email = email;
             this.password = password;
         }
 
