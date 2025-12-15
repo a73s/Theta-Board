@@ -28,10 +28,39 @@ public class MockRequestProxy implements IRequestProxy {
     private boolean isSessionValid = false;
     private ArrayList<BoardInformation> boards = new ArrayList<>();
 
+    private java.util.Map<Integer, ArrayList<BoardPostInformation>> postsMap = new java.util.HashMap<>();
+
     public MockRequestProxy() {
         boards.add(new BoardInformation("General Announcements", true, true, 1));
         boards.add(new BoardInformation("Project Updates", false, true, 2));
         boards.add(new BoardInformation("Random", false, false, 3));
+
+        // Initialize posts for board 1
+        ArrayList<BoardPostInformation> board1Posts = new ArrayList<>();
+        board1Posts.add(new BoardPostInformation("Welcome!", "Welcome to the board.", "admin", "2025-01-01"));
+        board1Posts.add(new BoardPostInformation("Update", "We are making progress.", "user1", "2025-01-02"));
+        postsMap.put(1, board1Posts);
+    }
+
+    // ...
+
+    @Override
+    public ArrayList<BoardPostInformation> getAllPostsForBoard(int boardID) {
+        if (postsMap.containsKey(boardID)) {
+            return postsMap.get(boardID);
+        }
+        return new ArrayList<>();
+    }
+
+    // ...
+
+    @Override
+    public Boolean postOnBoard(int boardID, String title, String body) {
+        if (!postsMap.containsKey(boardID)) {
+            postsMap.put(boardID, new ArrayList<>());
+        }
+        postsMap.get(boardID).add(new BoardPostInformation(title, body, "currentUser", "2025-01-01"));
+        return true;
     }
 
     public void setSessionValid(boolean sessionValid) {
@@ -65,24 +94,11 @@ public class MockRequestProxy implements IRequestProxy {
     }
 
     @Override
-    public ArrayList<BoardPostInformation> getAllPostsForBoard(int boardID) {
-        ArrayList<BoardPostInformation> posts = new ArrayList<>();
-        posts.add(new BoardPostInformation("Welcome!", "Welcome to the board.", "admin", "2025-01-01"));
-        posts.add(new BoardPostInformation("Update", "We are making progress.", "user1", "2025-01-02"));
-        return posts;
-    }
-
-    @Override
     public ArrayList<MemberInformation> getAllMembersForBoard(int boardID) {
         ArrayList<MemberInformation> members = new ArrayList<>();
         members.add(new MemberInformation("admin@example.com", "AdminUser"));
         members.add(new MemberInformation("user1@example.com", "UserOne"));
         return members;
-    }
-
-    @Override
-    public Boolean postOnBoard(int boardID, String title, String body) {
-        return true;
     }
 
     @Override
