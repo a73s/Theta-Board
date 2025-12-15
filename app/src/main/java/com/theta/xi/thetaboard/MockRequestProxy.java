@@ -26,6 +26,13 @@ public class MockRequestProxy implements IRequestProxy {
     }
 
     private boolean isSessionValid = false;
+    private ArrayList<BoardInformation> boards = new ArrayList<>();
+
+    public MockRequestProxy() {
+        boards.add(new BoardInformation("General Announcements", true, true, 1));
+        boards.add(new BoardInformation("Project Updates", false, true, 2));
+        boards.add(new BoardInformation("Random", false, false, 3));
+    }
 
     public void setSessionValid(boolean sessionValid) {
         isSessionValid = sessionValid;
@@ -38,11 +45,23 @@ public class MockRequestProxy implements IRequestProxy {
 
     @Override
     public ArrayList<BoardInformation> getAllBoardsForUser() {
-        ArrayList<BoardInformation> boards = new ArrayList<>();
-        boards.add(new BoardInformation("General Announcements", true, true, 1));
-        boards.add(new BoardInformation("Project Updates", false, true, 2));
-        boards.add(new BoardInformation("Random", false, false, 3));
         return boards;
+    }
+
+    // ... (other methods)
+
+    @Override
+    public Boolean joinBoard(String joinCode) {
+        boards.add(new BoardInformation("Joined Board " + joinCode, false, false, boards.size() + 1));
+        return true;
+    }
+
+    // ...
+
+    @Override
+    public Boolean createBoard(String name, String description) {
+        boards.add(new BoardInformation(name, true, true, boards.size() + 1));
+        return true;
     }
 
     @Override
@@ -82,17 +101,7 @@ public class MockRequestProxy implements IRequestProxy {
     }
 
     @Override
-    public Boolean joinBoard(String joinCode) {
-        return true;
-    }
-
-    @Override
     public Boolean setDisplayName(String displayName) {
-        return true;
-    }
-
-    @Override
-    public Boolean createBoard(String name, String description) {
         return true;
     }
 }
