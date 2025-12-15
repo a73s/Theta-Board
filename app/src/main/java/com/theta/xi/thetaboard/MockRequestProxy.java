@@ -25,9 +25,15 @@ public class MockRequestProxy implements IRequestProxy {
         return true;
     }
 
+    private boolean isSessionValid = false;
+
+    public void setSessionValid(boolean sessionValid) {
+        isSessionValid = sessionValid;
+    }
+
     @Override
     public Boolean sessionValid() {
-        return true;
+        return isSessionValid;
     }
 
     @Override
