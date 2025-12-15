@@ -111,6 +111,10 @@ public class HttpRequestProxy implements IRequestProxy {
 
     private static IRequestProxy instance = null;
 
+    public static void setInstance(IRequestProxy proxy) {
+        instance = proxy;
+    }
+
     public static IRequestProxy getProxy() {
         if (instance == null) {
             instance = new HttpRequestProxy("http://10.0.2.2:8080/api"); // Placeholder ip/domain
