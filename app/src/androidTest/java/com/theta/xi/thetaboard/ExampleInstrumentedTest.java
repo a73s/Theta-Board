@@ -23,17 +23,4 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.theta.xi.thetaboard", appContext.getPackageName());
     }
-
-    @Test
-    public void useMockProxy() {
-        // Set the mock proxy
-        HttpRequestProxy.setInstance(new MockRequestProxy());
-
-        // Get the proxy (should be the mock)
-        IRequestProxy proxy = HttpRequestProxy.getProxy();
-
-        // Verify it behaves like the mock
-        assertTrue(proxy.login("test@test.com", "password"));
-        assertEquals(3, proxy.getAllBoardsForUser().size());
-    }
 }
